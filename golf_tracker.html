@@ -7,17 +7,20 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
-
   .app { max-width: 480px; margin: 0 auto; padding: 16px; }
-
   .header { text-align: center; padding: 20px 0 16px; }
-  .header h1 { font-size: 18px; font-weight: 600; color: #1a1a1a; }
+  .header h1 { font-size: 18px; font-weight: 600; }
   .header p  { font-size: 13px; color: #888; margin-top: 4px; }
+
+  /* 탭 */
+  .tabs { display: flex; background: white; border-radius: 12px; padding: 4px; margin-bottom: 16px; gap: 4px; }
+  .tab { flex: 1; padding: 8px; font-size: 13px; font-weight: 500; border: none; border-radius: 8px; background: transparent; color: #888; cursor: pointer; }
+  .tab.active { background: #185FA5; color: white; }
 
   .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
   .stat-card { background: white; border-radius: 12px; padding: 12px; text-align: center; }
   .stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
-  .stat-value { font-size: 22px; font-weight: 600; color: #1a1a1a; }
+  .stat-value { font-size: 22px; font-weight: 600; }
   .stat-value.blue { color: #185FA5; }
 
   .date-bar { display: flex; justify-content: space-between; align-items: center; background: white; border-radius: 12px; padding: 11px 14px; margin-bottom: 12px; }
@@ -37,14 +40,12 @@
   .member-sub  { font-size: 12px; color: #888; margin-top: 2px; }
   .used-num  { font-size: 20px; font-weight: 600; text-align: right; }
   .used-label{ font-size: 11px; color: #888; text-align: right; }
-
   .progress-wrap { margin-bottom: 10px; }
   .progress-bg { height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
   .progress-info { display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 4px; }
-
   .btn-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .btn { padding: 7px 16px; font-size: 13px; font-weight: 500; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: opacity 0.15s; }
+  .btn { padding: 7px 16px; font-size: 13px; font-weight: 500; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
   .btn:disabled { opacity: 0.35; cursor: not-allowed; }
   .btn-primary { background: #185FA5; color: white; }
   .btn-primary:hover:not(:disabled) { background: #0C447C; }
@@ -54,11 +55,9 @@
   .dot { width: 8px; height: 8px; border-radius: 50%; }
   .exhausted-badge { font-size: 10px; background: #fde8e8; color: #c0392b; padding: 2px 7px; border-radius: 20px; margin-left: 4px; font-weight: 500; }
 
-  .log-section { background: white; border-radius: 14px; padding: 16px; }
+  .log-section { background: white; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
   .log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .log-title { font-size: 15px; font-weight: 600; }
-  .log-clear { font-size: 12px; color: #aaa; background: none; border: none; cursor: pointer; }
-  .log-clear:hover { color: #c0392b; }
   .log-list { display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; }
   .log-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f9f9f9; border-radius: 8px; font-size: 13px; }
   .log-name { display: flex; align-items: center; gap: 7px; font-weight: 500; }
@@ -66,16 +65,33 @@
   .log-time { color: #888; font-size: 12px; }
   .log-empty { text-align: center; color: #aaa; font-size: 13px; padding: 20px 0; }
 
-  .loading { text-align: center; padding: 60px 0; color: #888; font-size: 14px; }
-  .error-box { background: #fde8e8; border-radius: 12px; padding: 16px; text-align: center; color: #c0392b; font-size: 13px; margin: 20px 0; }
-  .setup-box { background: #EBF4FF; border-radius: 14px; padding: 20px; margin: 16px 0; }
-  .setup-box h2 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #185FA5; }
-  .setup-box input { width: 100%; padding: 10px 12px; border: 1px solid #c8dff5; border-radius: 8px; font-size: 13px; margin-bottom: 10px; }
-  .setup-box .btn-primary { width: 100%; justify-content: center; padding: 11px; font-size: 14px; }
-  .setup-note { font-size: 12px; color: #666; margin-top: 8px; line-height: 1.6; }
+  /* 날짜별 조회 탭 */
+  .history-section { background: white; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+  .date-picker-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+  .date-input { flex: 1; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; }
+  .btn-search { padding: 9px 16px; font-size: 13px; font-weight: 500; background: #185FA5; color: white; border: none; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+  .btn-search:hover { background: #0C447C; }
+  .history-result { margin-top: 4px; }
+  .history-date-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #185FA5; }
+  .history-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .history-stat { background: #f5f5f5; border-radius: 10px; padding: 10px; text-align: center; }
+  .history-stat-label { font-size: 11px; color: #888; margin-bottom: 3px; }
+  .history-stat-value { font-size: 18px; font-weight: 600; }
+  .member-history-list { display: flex; flex-direction: column; gap: 6px; }
+  .member-history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: #f9f9f9; border-radius: 10px; }
+  .mh-left { display: flex; align-items: center; gap: 8px; }
+  .mh-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+  .mh-name { font-size: 13px; font-weight: 500; }
+  .mh-times { font-size: 12px; color: #888; margin-top: 2px; }
+  .mh-count { font-size: 15px; font-weight: 600; color: #185FA5; }
+  .no-visit { color: #ccc; }
 
-  .refresh-btn { display: block; margin: 12px auto 0; background: none; border: 1px solid #ddd; border-radius: 8px; padding: 7px 18px; font-size: 12px; color: #888; cursor: pointer; }
+  .error-box { background: #fde8e8; border-radius: 12px; padding: 16px; text-align: center; color: #c0392b; font-size: 13px; margin: 20px 0; }
+  .loading { text-align: center; padding: 40px 0; color: #888; font-size: 14px; }
+  .refresh-btn { display: block; margin: 4px auto 0; background: none; border: 1px solid #ddd; border-radius: 8px; padding: 7px 18px; font-size: 12px; color: #888; cursor: pointer; }
   .refresh-btn:hover { background: #f5f5f5; }
+  .page { display: none; }
+  .page.active { display: block; }
 </style>
 </head>
 <body>
@@ -85,44 +101,53 @@
     <p>6명 공유 · 총 262회 · 하루 최대 4회</p>
   </div>
 
-  <!-- Google Sheets URL 설정 -->
-  <div class="setup-box" id="setup-box">
-    <h2>🔧 최초 설정</h2>
-    <p style="font-size:13px;color:#555;margin-bottom:10px">Apps Script 배포 후 받은 URL을 입력해주세요.</p>
-    <input type="text" id="script-url-input" placeholder="https://script.google.com/macros/s/.../exec" />
-    <button class="btn btn-primary" onclick="saveScriptUrl()">저장하고 시작</button>
-    <p class="setup-note">※ 입력한 URL은 이 기기에만 저장됩니다.<br>다른 멤버도 각자 기기에서 한 번씩 입력해야 합니다.</p>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('today')">오늘 현황</button>
+    <button class="tab" onclick="switchTab('history')">날짜별 조회</button>
+    <button class="tab" onclick="switchTab('member')">멤버별 현황</button>
   </div>
 
-  <div id="main-content" style="display:none">
+  <!-- 오늘 현황 탭 -->
+  <div class="page active" id="page-today">
     <div class="summary-grid">
       <div class="stat-card"><div class="stat-label">전체 잔여</div><div class="stat-value blue" id="total-remain">-</div></div>
       <div class="stat-card"><div class="stat-label">오늘 입장</div><div class="stat-value" id="today-total">-</div></div>
       <div class="stat-card"><div class="stat-label">총 사용</div><div class="stat-value" id="total-used">-</div></div>
     </div>
-
     <div class="date-bar">
       <span class="date-text" id="today-date"></span>
       <span class="remain-text">입장 가능 <b id="remain-today">-</b>회 남음</span>
     </div>
-
     <div class="warning" id="warning-bar">⚠️ <span id="warning-msg"></span></div>
-
-    <div class="members" id="members-container">
-      <div class="loading">데이터 불러오는 중...</div>
-    </div>
-
+    <div class="members" id="members-container"><div class="loading">데이터 불러오는 중...</div></div>
     <div class="log-section">
-      <div class="log-header">
-        <span class="log-title">오늘 입장 기록</span>
-        <button class="log-clear" onclick="confirmReset()">초기화</button>
-      </div>
+      <div class="log-header"><span class="log-title">오늘 입장 기록</span></div>
       <div class="log-list" id="log-list"><div class="log-empty">기록 불러오는 중...</div></div>
     </div>
-
     <button class="refresh-btn" onclick="loadData()">↻ 새로고침</button>
     <p style="text-align:center;font-size:11px;color:#ccc;margin-top:10px" id="last-updated"></p>
-    <p style="text-align:center;font-size:11px;color:#ccc;margin-top:6px"><span onclick="resetUrl()" style="cursor:pointer">URL 재설정</span></p>
+  </div>
+
+  <!-- 날짜별 조회 탭 -->
+  <div class="page" id="page-history">
+    <div class="history-section">
+      <div class="log-title" style="margin-bottom:12px">날짜별 입장 조회</div>
+      <div class="date-picker-row">
+        <input type="date" class="date-input" id="search-date" />
+        <button class="btn-search" onclick="searchByDate()">조회</button>
+      </div>
+      <div id="history-result">
+        <div class="log-empty">날짜를 선택하고 조회 버튼을 눌러주세요</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 멤버별 현황 탭 -->
+  <div class="page" id="page-member">
+    <div class="history-section">
+      <div class="log-title" style="margin-bottom:12px">멤버별 사용 현황</div>
+      <div id="member-stats"><div class="loading">데이터 불러오는 중...</div></div>
+    </div>
   </div>
 </div>
 
@@ -136,34 +161,20 @@ const MEMBERS_META = [
   { id:'YANG', name:'YANG', allot:30,  color:'#993556', bg:'#FBEAF0', tc:'#72243E' },
 ];
 
-const URL_KEY = 'golf_script_url_v1';
-let SCRIPT_URL = localStorage.getItem(URL_KEY) || 'https://script.google.com/macros/s/AKfycbw9VTflM8N-vGVF9UtnnMX8cVIygM6owALPdY8ZCP2olfrMCxo3UnbTR9c3WcAFJkRN/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9VTflM8N-vGVF9UtnnMX8cVIygM6owALPdY8ZCP2olfrMCxo3UnbTR9c3WcAFJkRN/exec';
+let allLogs = [];
 let currentData = null;
 
-function saveScriptUrl() {
-  const val = document.getElementById('script-url-input').value.trim();
-  if (!val.startsWith('https://script.google.com')) {
-    alert('올바른 Apps Script URL을 입력해주세요.');
-    return;
-  }
-  SCRIPT_URL = val;
-  localStorage.setItem(URL_KEY, val);
-  document.getElementById('setup-box').style.display = 'none';
-  document.getElementById('main-content').style.display = 'block';
-  initAndLoad();
-}
+// 오늘 날짜 기본값 설정
+document.getElementById('search-date').value = new Date().toISOString().slice(0,10);
 
-function resetUrl() {
-  if (!confirm('URL을 재설정하시겠습니까?')) return;
-  localStorage.removeItem(URL_KEY);
-  location.reload();
-}
-
-async function initAndLoad() {
-  try {
-    await fetch(SCRIPT_URL + '?action=init');
-  } catch(e) {}
-  await loadData();
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', ['today','history','member'][i] === tab);
+  });
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  if (tab === 'member' && currentData) renderMemberStats(currentData.members);
 }
 
 async function loadData() {
@@ -175,8 +186,16 @@ async function loadData() {
     render(data);
     document.getElementById('last-updated').textContent = '마지막 업데이트: ' + new Date().toLocaleTimeString('ko-KR');
   } catch(e) {
-    showError('데이터를 불러오지 못했습니다. 네트워크를 확인해주세요.');
+    showError('데이터를 불러오지 못했습니다.');
   }
+}
+
+async function loadAllLogs() {
+  try {
+    const res  = await fetch(SCRIPT_URL + '?action=getAllLogs');
+    const data = await res.json();
+    if (data.logs) allLogs = data.logs;
+  } catch(e) {}
 }
 
 function render(data) {
@@ -193,15 +212,9 @@ function render(data) {
 
   const wb = document.getElementById('warning-bar');
   const wm = document.getElementById('warning-msg');
-  if (todayCount >= 4) {
-    wb.classList.add('show');
-    wm.textContent = '오늘 입장 한도(4회)에 도달했습니다.';
-  } else if (todayCount === 3) {
-    wb.classList.add('show');
-    wm.textContent = '오늘 입장 가능 횟수가 1회 남았습니다.';
-  } else {
-    wb.classList.remove('show');
-  }
+  if (todayCount >= 4) { wb.classList.add('show'); wm.textContent = '오늘 입장 한도(4회)에 도달했습니다.'; }
+  else if (todayCount === 3) { wb.classList.add('show'); wm.textContent = '오늘 입장 가능 횟수가 1회 남았습니다.'; }
+  else { wb.classList.remove('show'); }
 
   renderMembers(members, todayCount, todayLog);
   renderLog(todayLog);
@@ -210,8 +223,8 @@ function render(data) {
 function renderMembers(members, todayCount, todayLog) {
   const container = document.getElementById('members-container');
   container.innerHTML = members.map(m => {
-    const meta   = MEMBERS_META.find(x => x.id === m.id) || {};
-    const pct    = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
+    const meta  = MEMBERS_META.find(x => x.id === m.id) || {};
+    const pct   = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
     const todayV = (todayLog || []).filter(e => e.id === m.id).length;
     const canIn  = todayCount < 4 && m.remain > 0;
     const dots   = [1,2,3,4].map(i =>
@@ -256,15 +269,98 @@ function renderLog(todayLog) {
   }).join('');
 }
 
+async function searchByDate() {
+  const date = document.getElementById('search-date').value;
+  if (!date) { alert('날짜를 선택해주세요'); return; }
+
+  const result = document.getElementById('history-result');
+  result.innerHTML = '<div class="loading">조회 중...</div>';
+
+  try {
+    const res  = await fetch(SCRIPT_URL + '?action=getLogByDate&date=' + date);
+    const data = await res.json();
+
+    if (data.error) { result.innerHTML = `<div class="log-empty">${data.error}</div>`; return; }
+
+    const logs = data.logs || [];
+    const totalCount = logs.length;
+
+    // 멤버별 집계
+    const memberCount = {};
+    const memberTimes = {};
+    MEMBERS_META.forEach(m => { memberCount[m.id] = 0; memberTimes[m.id] = []; });
+    logs.forEach(l => {
+      if (memberCount[l.id] !== undefined) {
+        memberCount[l.id]++;
+        memberTimes[l.id].push(l.time);
+      }
+    });
+
+    const visitedMembers = MEMBERS_META.filter(m => memberCount[m.id] > 0);
+
+    result.innerHTML = `
+      <div class="history-date-title">${formatDateKR(date)}</div>
+      <div class="history-summary">
+        <div class="history-stat"><div class="history-stat-label">총 입장</div><div class="history-stat-value">${totalCount}회</div></div>
+        <div class="history-stat"><div class="history-stat-label">입장 인원</div><div class="history-stat-value">${visitedMembers.length}명</div></div>
+        <div class="history-stat"><div class="history-stat-label">잔여 슬롯</div><div class="history-stat-value">${4 - totalCount < 0 ? 0 : 4 - totalCount}회</div></div>
+      </div>
+      <div class="member-history-list">
+        ${MEMBERS_META.map(m => {
+          const cnt   = memberCount[m.id] || 0;
+          const times = (memberTimes[m.id] || []).join(', ');
+          return `<div class="member-history-item ${cnt === 0 ? 'no-visit' : ''}">
+            <div class="mh-left">
+              <div class="mh-avatar" style="background:${cnt > 0 ? m.bg : '#f0f0f0'};color:${cnt > 0 ? m.tc : '#aaa'}">${m.name}</div>
+              <div>
+                <div class="mh-name" style="color:${cnt > 0 ? '#1a1a1a' : '#aaa'}">${m.name}</div>
+                ${cnt > 0 ? `<div class="mh-times">${times}</div>` : '<div class="mh-times">미입장</div>'}
+              </div>
+            </div>
+            <div class="mh-count" style="color:${cnt > 0 ? '#185FA5' : '#ccc'}">${cnt > 0 ? cnt + '회' : '-'}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      ${totalCount === 0 ? '<div class="log-empty" style="margin-top:12px">이 날 입장 기록이 없습니다</div>' : ''}
+    `;
+  } catch(e) {
+    result.innerHTML = '<div class="log-empty">조회 중 오류가 발생했습니다</div>';
+  }
+}
+
+function renderMemberStats(members) {
+  const el = document.getElementById('member-stats');
+  el.innerHTML = members.map(m => {
+    const meta = MEMBERS_META.find(x => x.id === m.id) || {};
+    const pct  = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
+    return `<div class="member-history-item" style="margin-bottom:8px;background:white;border-radius:12px;padding:14px;">
+      <div class="mh-left">
+        <div class="mh-avatar" style="background:${meta.bg};color:${meta.tc};width:36px;height:36px">${m.name}</div>
+        <div>
+          <div class="mh-name">${m.name}</div>
+          <div style="font-size:11px;color:#888;margin-top:2px">배정 ${m.allot}회 · 잔여 ${m.remain}회</div>
+          <div style="margin-top:6px;width:140px;height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:${meta.color};border-radius:3px"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:18px;font-weight:600">${m.used}</div>
+        <div style="font-size:11px;color:#888">${pct}% 사용</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 async function checkin(id) {
-  setLoading(id, true);
+  document.querySelectorAll('.btn-primary').forEach(b => b.disabled = true);
   try {
     const res  = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'checkin', id }) });
     const data = await res.json();
-    if (data.error) { alert(data.error); }
+    if (data.error) alert(data.error);
     await loadData();
-  } catch(e) { alert('오류가 발생했습니다. 다시 시도해주세요.'); }
-  setLoading(id, false);
+  } catch(e) { alert('오류가 발생했습니다.'); }
+  document.querySelectorAll('.btn-primary').forEach(b => b.disabled = false);
 }
 
 async function undoCheckin(id) {
@@ -272,39 +368,24 @@ async function undoCheckin(id) {
   try {
     const res  = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'undo', id }) });
     const data = await res.json();
-    if (data.error) { alert(data.error); }
+    if (data.error) alert(data.error);
     await loadData();
   } catch(e) { alert('오류가 발생했습니다.'); }
 }
 
-function confirmReset() {
-  alert('초기화는 Google Sheets에서 직접 사용 횟수를 0으로 수정해주세요.');
-}
-
-function setLoading(id, on) {
-  const btns = document.querySelectorAll('.btn-primary');
-  btns.forEach(b => b.disabled = on);
-}
-
 function showError(msg) {
-  document.getElementById('members-container').innerHTML =
-    `<div class="error-box">⚠️ ${msg}</div>`;
+  document.getElementById('members-container').innerHTML = `<div class="error-box">⚠️ ${msg}</div>`;
 }
 
 function formatDateKR(str) {
   if (!str) return '';
-  const d    = new Date(str + 'T00:00:00');
+  const d = new Date(str + 'T00:00:00');
   const days = ['일','월','화','수','목','금','토'];
   return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일 (' + days[d.getDay()] + ')';
 }
 
-// 시작
-if (true) { // URL hardcoded
-  document.getElementById('setup-box').style.display   = 'none';
-  document.getElementById('main-content').style.display = 'block';
-  loadData();
-  setInterval(loadData, 30000); // 30초마다 자동 갱신
-}
+loadData();
+setInterval(loadData, 30000);
 </script>
 </body>
 </html>
