@@ -12,7 +12,6 @@
   .header h1 { font-size: 18px; font-weight: 600; }
   .header p  { font-size: 13px; color: #888; margin-top: 4px; }
 
-  /* 탭 */
   .tabs { display: flex; background: white; border-radius: 12px; padding: 4px; margin-bottom: 16px; gap: 4px; }
   .tab { flex: 1; padding: 8px; font-size: 13px; font-weight: 500; border: none; border-radius: 8px; background: transparent; color: #888; cursor: pointer; }
   .tab.active { background: #185FA5; color: white; }
@@ -55,9 +54,8 @@
   .dot { width: 8px; height: 8px; border-radius: 50%; }
   .exhausted-badge { font-size: 10px; background: #fde8e8; color: #c0392b; padding: 2px 7px; border-radius: 20px; margin-left: 4px; font-weight: 500; }
 
-  .log-section { background: white; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
-  .log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .log-title { font-size: 15px; font-weight: 600; }
+  .section-box { background: white; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+  .section-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
   .log-list { display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; }
   .log-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f9f9f9; border-radius: 8px; font-size: 13px; }
   .log-name { display: flex; align-items: center; gap: 7px; font-weight: 500; }
@@ -65,31 +63,41 @@
   .log-time { color: #888; font-size: 12px; }
   .log-empty { text-align: center; color: #aaa; font-size: 13px; padding: 20px 0; }
 
-  /* 날짜별 조회 탭 */
-  .history-section { background: white; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+  /* 날짜별 조회 */
   .date-picker-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
   .date-input { flex: 1; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; }
   .btn-search { padding: 9px 16px; font-size: 13px; font-weight: 500; background: #185FA5; color: white; border: none; border-radius: 8px; cursor: pointer; white-space: nowrap; }
-  .btn-search:hover { background: #0C447C; }
-  .history-result { margin-top: 4px; }
-  .history-date-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #185FA5; }
   .history-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
   .history-stat { background: #f5f5f5; border-radius: 10px; padding: 10px; text-align: center; }
   .history-stat-label { font-size: 11px; color: #888; margin-bottom: 3px; }
   .history-stat-value { font-size: 18px; font-weight: 600; }
-  .member-history-list { display: flex; flex-direction: column; gap: 6px; }
-  .member-history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: #f9f9f9; border-radius: 10px; }
-  .mh-left { display: flex; align-items: center; gap: 8px; }
-  .mh-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
-  .mh-name { font-size: 13px; font-weight: 500; }
-  .mh-times { font-size: 12px; color: #888; margin-top: 2px; }
-  .mh-count { font-size: 15px; font-weight: 600; color: #185FA5; }
-  .no-visit { color: #ccc; }
+  .history-date-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #185FA5; }
 
-  .error-box { background: #fde8e8; border-radius: 12px; padding: 16px; text-align: center; color: #c0392b; font-size: 13px; margin: 20px 0; }
+  /* 멤버별 현황 */
+  .member-stat-card { background: white; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: box-shadow 0.15s; }
+  .member-stat-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .member-stat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .tap-hint { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  /* 멤버 상세 이력 모달 */
+  .modal-overlay { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); z-index: 100; display: none; justify-content: center; align-items: flex-end; }
+  .modal-overlay.show { display: flex; }
+  .modal { background: white; border-radius: 20px 20px 0 0; padding: 20px; width: 100%; max-width: 480px; max-height: 80vh; display: flex; flex-direction: column; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .modal-title { font-size: 16px; font-weight: 600; }
+  .modal-close { background: #f0f0f0; border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .modal-stat { background: #f5f5f5; border-radius: 10px; padding: 10px; text-align: center; }
+  .modal-stat-label { font-size: 11px; color: #888; margin-bottom: 3px; }
+  .modal-stat-value { font-size: 18px; font-weight: 600; }
+  .modal-log-list { overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .modal-log-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: #f9f9f9; border-radius: 8px; font-size: 13px; }
+  .modal-log-date { font-weight: 500; }
+  .modal-log-time { color: #888; }
+
+  .error-box { background: #fde8e8; border-radius: 12px; padding: 16px; text-align: center; color: #c0392b; font-size: 13px; }
   .loading { text-align: center; padding: 40px 0; color: #888; font-size: 14px; }
   .refresh-btn { display: block; margin: 4px auto 0; background: none; border: 1px solid #ddd; border-radius: 8px; padding: 7px 18px; font-size: 12px; color: #888; cursor: pointer; }
-  .refresh-btn:hover { background: #f5f5f5; }
   .page { display: none; }
   .page.active { display: block; }
 </style>
@@ -107,7 +115,7 @@
     <button class="tab" onclick="switchTab('member')">멤버별 현황</button>
   </div>
 
-  <!-- 오늘 현황 탭 -->
+  <!-- 오늘 현황 -->
   <div class="page active" id="page-today">
     <div class="summary-grid">
       <div class="stat-card"><div class="stat-label">전체 잔여</div><div class="stat-value blue" id="total-remain">-</div></div>
@@ -120,34 +128,42 @@
     </div>
     <div class="warning" id="warning-bar">⚠️ <span id="warning-msg"></span></div>
     <div class="members" id="members-container"><div class="loading">데이터 불러오는 중...</div></div>
-    <div class="log-section">
-      <div class="log-header"><span class="log-title">오늘 입장 기록</span></div>
+    <div class="section-box">
+      <div class="section-title">오늘 입장 기록</div>
       <div class="log-list" id="log-list"><div class="log-empty">기록 불러오는 중...</div></div>
     </div>
     <button class="refresh-btn" onclick="loadData()">↻ 새로고침</button>
     <p style="text-align:center;font-size:11px;color:#ccc;margin-top:10px" id="last-updated"></p>
   </div>
 
-  <!-- 날짜별 조회 탭 -->
+  <!-- 날짜별 조회 -->
   <div class="page" id="page-history">
-    <div class="history-section">
-      <div class="log-title" style="margin-bottom:12px">날짜별 입장 조회</div>
+    <div class="section-box">
+      <div class="section-title">날짜별 입장 조회</div>
       <div class="date-picker-row">
         <input type="date" class="date-input" id="search-date" />
         <button class="btn-search" onclick="searchByDate()">조회</button>
       </div>
-      <div id="history-result">
-        <div class="log-empty">날짜를 선택하고 조회 버튼을 눌러주세요</div>
-      </div>
+      <div id="history-result"><div class="log-empty">날짜를 선택하고 조회하세요</div></div>
     </div>
   </div>
 
-  <!-- 멤버별 현황 탭 -->
+  <!-- 멤버별 현황 -->
   <div class="page" id="page-member">
-    <div class="history-section">
-      <div class="log-title" style="margin-bottom:12px">멤버별 사용 현황</div>
-      <div id="member-stats"><div class="loading">데이터 불러오는 중...</div></div>
+    <div id="member-stats-list"><div class="loading">데이터 불러오는 중...</div></div>
+  </div>
+</div>
+
+<!-- 멤버 상세 이력 모달 -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
     </div>
+    <div class="modal-stats" id="modal-stats"></div>
+    <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:#555">전체 입장 이력 (최신순)</div>
+    <div class="modal-log-list" id="modal-log-list"><div class="loading">불러오는 중...</div></div>
   </div>
 </div>
 
@@ -162,10 +178,8 @@ const MEMBERS_META = [
 ];
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9VTflM8N-vGVF9UtnnMX8cVIygM6owALPdY8ZCP2olfrMCxo3UnbTR9c3WcAFJkRN/exec';
-let allLogs = [];
 let currentData = null;
 
-// 오늘 날짜 기본값 설정
 document.getElementById('search-date').value = new Date().toISOString().slice(0,10);
 
 function switchTab(tab) {
@@ -185,57 +199,45 @@ async function loadData() {
     currentData = data;
     render(data);
     document.getElementById('last-updated').textContent = '마지막 업데이트: ' + new Date().toLocaleTimeString('ko-KR');
-  } catch(e) {
-    showError('데이터를 불러오지 못했습니다.');
-  }
-}
-
-async function loadAllLogs() {
-  try {
-    const res  = await fetch(SCRIPT_URL + '?action=getAllLogs');
-    const data = await res.json();
-    if (data.logs) allLogs = data.logs;
-  } catch(e) {}
+  } catch(e) { showError('데이터를 불러오지 못했습니다.'); }
 }
 
 function render(data) {
   const { members, todayCount, todayLog } = data;
-  const totalUsed   = members.reduce((s, m) => s + m.used, 0);
-  const totalRemain = members.reduce((s, m) => s + m.remain, 0);
-  const remainToday = Math.max(0, 4 - todayCount);
+  const totalUsed   = members.reduce((s,m) => s + m.used, 0);
+  const totalRemain = members.reduce((s,m) => s + m.remain, 0);
 
   document.getElementById('total-remain').textContent = totalRemain;
   document.getElementById('today-total').textContent  = todayCount + '/4';
   document.getElementById('total-used').textContent   = totalUsed;
-  document.getElementById('remain-today').textContent = remainToday;
+  document.getElementById('remain-today').textContent = Math.max(0, 4 - todayCount);
   document.getElementById('today-date').textContent   = formatDateKR(data.today);
 
   const wb = document.getElementById('warning-bar');
   const wm = document.getElementById('warning-msg');
-  if (todayCount >= 4) { wb.classList.add('show'); wm.textContent = '오늘 입장 한도(4회)에 도달했습니다.'; }
-  else if (todayCount === 3) { wb.classList.add('show'); wm.textContent = '오늘 입장 가능 횟수가 1회 남았습니다.'; }
-  else { wb.classList.remove('show'); }
+  if (todayCount >= 4)      { wb.classList.add('show'); wm.textContent = '오늘 입장 한도(4회)에 도달했습니다.'; }
+  else if (todayCount === 3){ wb.classList.add('show'); wm.textContent = '오늘 입장 가능 횟수가 1회 남았습니다.'; }
+  else                       { wb.classList.remove('show'); }
 
   renderMembers(members, todayCount, todayLog);
   renderLog(todayLog);
 }
 
 function renderMembers(members, todayCount, todayLog) {
-  const container = document.getElementById('members-container');
-  container.innerHTML = members.map(m => {
-    const meta  = MEMBERS_META.find(x => x.id === m.id) || {};
-    const pct   = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
-    const todayV = (todayLog || []).filter(e => e.id === m.id).length;
+  document.getElementById('members-container').innerHTML = members.map(m => {
+    const meta   = MEMBERS_META.find(x => x.id === m.id) || {};
+    const pct    = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
+    const todayV = (todayLog||[]).filter(e => e.id === m.id).length;
     const canIn  = todayCount < 4 && m.remain > 0;
     const dots   = [1,2,3,4].map(i =>
-      `<span class="dot" style="background:${i <= todayV ? meta.color : '#e0e0e0'}"></span>`
+      `<span class="dot" style="background:${i<=todayV ? meta.color : '#e0e0e0'}"></span>`
     ).join('');
     return `<div class="member-card">
       <div class="member-top">
         <div class="member-left">
           <div class="avatar" style="background:${meta.bg};color:${meta.tc}">${m.name}</div>
           <div>
-            <div class="member-name">${m.name}${m.remain===0 ? '<span class="exhausted-badge">소진</span>' : ''}</div>
+            <div class="member-name">${m.name}${m.remain===0?'<span class="exhausted-badge">소진</span>':''}</div>
             <div class="member-sub">배정 ${m.allot}회 · 잔여 ${m.remain}회</div>
           </div>
         </div>
@@ -246,8 +248,8 @@ function renderMembers(members, todayCount, todayLog) {
         <div class="progress-info"><span>${pct}% 사용</span><span>${m.remain}회 남음</span></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" onclick="checkin('${m.id}')" ${canIn ? '' : 'disabled'}>✓ 체크인</button>
-        ${m.used > 0 ? `<button class="btn btn-undo" onclick="undoCheckin('${m.id}')">↩ 취소</button>` : ''}
+        <button class="btn btn-primary" onclick="checkin('${m.id}')" ${canIn?'':'disabled'}>✓ 체크인</button>
+        ${m.used>0?`<button class="btn btn-undo" onclick="undoCheckin('${m.id}')">↩ 취소</button>`:''}
         <div class="today-dots">${dots}<span style="margin-left:2px">오늘 ${todayV}회</span></div>
       </div>
     </div>`;
@@ -257,14 +259,13 @@ function renderMembers(members, todayCount, todayLog) {
 function renderLog(todayLog) {
   const list = document.getElementById('log-list');
   if (!todayLog || todayLog.length === 0) {
-    list.innerHTML = '<div class="log-empty">아직 오늘 입장 기록이 없습니다</div>';
-    return;
+    list.innerHTML = '<div class="log-empty">아직 오늘 입장 기록이 없습니다</div>'; return;
   }
-  list.innerHTML = todayLog.map(entry => {
-    const meta = MEMBERS_META.find(x => x.id === entry.id) || {};
+  list.innerHTML = todayLog.map(e => {
+    const meta = MEMBERS_META.find(x => x.id === e.id) || {};
     return `<div class="log-item">
-      <span class="log-name"><span class="log-dot" style="background:${meta.color}"></span>${entry.id} 입장</span>
-      <span class="log-time">${entry.time}</span>
+      <span class="log-name"><span class="log-dot" style="background:${meta.color}"></span>${e.id} 입장</span>
+      <span class="log-time">${e.time}</span>
     </div>`;
   }).join('');
 }
@@ -272,84 +273,119 @@ function renderLog(todayLog) {
 async function searchByDate() {
   const date = document.getElementById('search-date').value;
   if (!date) { alert('날짜를 선택해주세요'); return; }
-
   const result = document.getElementById('history-result');
   result.innerHTML = '<div class="loading">조회 중...</div>';
-
   try {
     const res  = await fetch(SCRIPT_URL + '?action=getLogByDate&date=' + date);
     const data = await res.json();
-
-    if (data.error) { result.innerHTML = `<div class="log-empty">${data.error}</div>`; return; }
-
     const logs = data.logs || [];
-    const totalCount = logs.length;
 
-    // 멤버별 집계
     const memberCount = {};
     const memberTimes = {};
     MEMBERS_META.forEach(m => { memberCount[m.id] = 0; memberTimes[m.id] = []; });
     logs.forEach(l => {
-      if (memberCount[l.id] !== undefined) {
-        memberCount[l.id]++;
-        memberTimes[l.id].push(l.time);
-      }
+      if (memberCount[l.id] !== undefined) { memberCount[l.id]++; memberTimes[l.id].push(l.time); }
     });
 
-    const visitedMembers = MEMBERS_META.filter(m => memberCount[m.id] > 0);
-
+    const visited = MEMBERS_META.filter(m => memberCount[m.id] > 0).length;
     result.innerHTML = `
       <div class="history-date-title">${formatDateKR(date)}</div>
       <div class="history-summary">
-        <div class="history-stat"><div class="history-stat-label">총 입장</div><div class="history-stat-value">${totalCount}회</div></div>
-        <div class="history-stat"><div class="history-stat-label">입장 인원</div><div class="history-stat-value">${visitedMembers.length}명</div></div>
-        <div class="history-stat"><div class="history-stat-label">잔여 슬롯</div><div class="history-stat-value">${4 - totalCount < 0 ? 0 : 4 - totalCount}회</div></div>
+        <div class="history-stat"><div class="history-stat-label">총 입장</div><div class="history-stat-value">${logs.length}회</div></div>
+        <div class="history-stat"><div class="history-stat-label">입장 인원</div><div class="history-stat-value">${visited}명</div></div>
+        <div class="history-stat"><div class="history-stat-label">잔여 슬롯</div><div class="history-stat-value">${Math.max(0,4-logs.length)}회</div></div>
       </div>
-      <div class="member-history-list">
+      <div style="display:flex;flex-direction:column;gap:6px">
         ${MEMBERS_META.map(m => {
-          const cnt   = memberCount[m.id] || 0;
-          const times = (memberTimes[m.id] || []).join(', ');
-          return `<div class="member-history-item ${cnt === 0 ? 'no-visit' : ''}">
-            <div class="mh-left">
-              <div class="mh-avatar" style="background:${cnt > 0 ? m.bg : '#f0f0f0'};color:${cnt > 0 ? m.tc : '#aaa'}">${m.name}</div>
-              <div>
-                <div class="mh-name" style="color:${cnt > 0 ? '#1a1a1a' : '#aaa'}">${m.name}</div>
-                ${cnt > 0 ? `<div class="mh-times">${times}</div>` : '<div class="mh-times">미입장</div>'}
-              </div>
-            </div>
-            <div class="mh-count" style="color:${cnt > 0 ? '#185FA5' : '#ccc'}">${cnt > 0 ? cnt + '회' : '-'}</div>
+          const cnt   = memberCount[m.id]||0;
+          const times = (memberTimes[m.id]||[]).join(', ');
+          return `<div class="log-item" style="${cnt===0?'opacity:0.4':''}">
+            <span class="log-name">
+              <span class="log-dot" style="background:${cnt>0?m.color:'#ccc'}"></span>
+              <span>${m.name}</span>
+              ${cnt>0?`<span style="font-size:11px;color:#888">${times}</span>`:'<span style="font-size:11px;color:#aaa">미입장</span>'}
+            </span>
+            <span style="font-weight:600;color:${cnt>0?m.color:'#ccc'}">${cnt>0?cnt+'회':'-'}</span>
           </div>`;
         }).join('')}
       </div>
-      ${totalCount === 0 ? '<div class="log-empty" style="margin-top:12px">이 날 입장 기록이 없습니다</div>' : ''}
+      ${logs.length===0?'<div class="log-empty" style="margin-top:12px">이 날 입장 기록이 없습니다</div>':''}
     `;
-  } catch(e) {
-    result.innerHTML = '<div class="log-empty">조회 중 오류가 발생했습니다</div>';
-  }
+  } catch(e) { result.innerHTML = '<div class="log-empty">조회 중 오류가 발생했습니다</div>'; }
 }
 
 function renderMemberStats(members) {
-  const el = document.getElementById('member-stats');
-  el.innerHTML = members.map(m => {
+  document.getElementById('member-stats-list').innerHTML = members.map(m => {
     const meta = MEMBERS_META.find(x => x.id === m.id) || {};
     const pct  = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
-    return `<div class="member-history-item" style="margin-bottom:8px;background:white;border-radius:12px;padding:14px;">
-      <div class="mh-left">
-        <div class="mh-avatar" style="background:${meta.bg};color:${meta.tc};width:36px;height:36px">${m.name}</div>
-        <div>
-          <div class="mh-name">${m.name}</div>
-          <div style="font-size:11px;color:#888;margin-top:2px">배정 ${m.allot}회 · 잔여 ${m.remain}회</div>
-          <div style="margin-top:6px;width:140px;height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden">
-            <div style="width:${pct}%;height:100%;background:${meta.color};border-radius:3px"></div>
+    return `<div class="member-stat-card" onclick="openMemberModal('${m.id}')">
+      <div class="member-stat-top">
+        <div class="member-left">
+          <div class="avatar" style="background:${meta.bg};color:${meta.tc}">${m.name}</div>
+          <div>
+            <div class="member-name">${m.name}${m.remain===0?'<span class="exhausted-badge">소진</span>':''}</div>
+            <div class="member-sub">배정 ${m.allot}회 · 잔여 ${m.remain}회</div>
           </div>
         </div>
+        <div style="text-align:right">
+          <div class="used-num" style="color:${meta.color}">${m.used}</div>
+          <div class="used-label">사용 횟수</div>
+        </div>
       </div>
-      <div style="text-align:right">
-        <div style="font-size:18px;font-weight:600">${m.used}</div>
-        <div style="font-size:11px;color:#888">${pct}% 사용</div>
-      </div>
+      <div class="progress-bg"><div class="progress-fill" style="width:${pct}%;background:${meta.color}"></div></div>
+      <div class="progress-info" style="margin-top:4px"><span>${pct}% 사용</span><span style="color:#aaa">탭하면 상세 이력 보기 →</span></div>
     </div>`;
   }).join('');
+}
+
+async function openMemberModal(id) {
+  const m    = currentData.members.find(x => x.id === id);
+  const meta = MEMBERS_META.find(x => x.id === id) || {};
+  const pct  = m.allot > 0 ? Math.round((m.used / m.allot) * 100) : 0;
+
+  document.getElementById('modal-title').innerHTML =
+    `<span style="display:inline-flex;align-items:center;gap:8px">
+      <span style="width:28px;height:28px;border-radius:50%;background:${meta.bg};color:${meta.tc};display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:600">${m.name}</span>
+      ${m.name} 이용 이력
+    </span>`;
+
+  document.getElementById('modal-stats').innerHTML = `
+    <div class="modal-stat"><div class="modal-stat-label">배정</div><div class="modal-stat-value">${m.allot}회</div></div>
+    <div class="modal-stat"><div class="modal-stat-label">사용</div><div class="modal-stat-value" style="color:${meta.color}">${m.used}회</div></div>
+    <div class="modal-stat"><div class="modal-stat-label">잔여</div><div class="modal-stat-value">${m.remain}회</div></div>
+  `;
+
+  document.getElementById('modal-log-list').innerHTML = '<div class="loading">불러오는 중...</div>';
+  document.getElementById('modal-overlay').classList.add('show');
+
+  try {
+    const res  = await fetch(SCRIPT_URL + '?action=getMemberLogs&id=' + id);
+    const data = await res.json();
+    const logs = data.logs || [];
+
+    if (logs.length === 0) {
+      document.getElementById('modal-log-list').innerHTML = '<div class="log-empty">입장 기록이 없습니다</div>';
+      return;
+    }
+    document.getElementById('modal-log-list').innerHTML = logs.map((l,i) =>
+      `<div class="modal-log-item">
+        <span class="modal-log-date">
+          <span style="font-size:11px;color:#aaa;margin-right:6px">${logs.length - i}</span>
+          ${formatDateKR(l.date)}
+        </span>
+        <span class="modal-log-time">${l.time}</span>
+      </div>`
+    ).join('');
+  } catch(e) {
+    document.getElementById('modal-log-list').innerHTML = '<div class="log-empty">불러오기 실패</div>';
+  }
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('show');
 }
 
 async function checkin(id) {
@@ -381,7 +417,7 @@ function formatDateKR(str) {
   if (!str) return '';
   const d = new Date(str + 'T00:00:00');
   const days = ['일','월','화','수','목','금','토'];
-  return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일 (' + days[d.getDay()] + ')';
+  return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일 ('+days[d.getDay()]+')';
 }
 
 loadData();
